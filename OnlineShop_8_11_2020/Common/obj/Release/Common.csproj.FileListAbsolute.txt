@@ -1,0 +1,6 @@
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\Common\bin\Release\Common.dll
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\Common\bin\Release\Common.pdb
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\Common\obj\Release\Common.csprojAssemblyReference.cache
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\Common\obj\Release\Common.csproj.CoreCompileInputs.cache
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\Common\obj\Release\Common.dll
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\Common\obj\Release\Common.pdb

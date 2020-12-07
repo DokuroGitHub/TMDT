@@ -1,0 +1,97 @@
+﻿@model Model.EF.Content
+@{
+    //set seo title//
+    ViewBag.Title = Model.MetaTitle;
+    ViewBag.Keywords = Model.MetaKeywords;
+    ViewBag.Description = Model.Description;
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var tags = (List<Model.EF.Tag>)ViewBag.Tags;
+    var category = (Model.EF.Category)ViewBag.Category;
+    var relatedContents = (List<Model.EF.Content>)ViewBag.RalatedContents;
+}
+
+<body>
+    <!--phải nhận tham số prodID-->
+    <div class="content">
+
+        <!-- link trang chủ -> danh mục tin tức -->
+        <div class="content_top">
+                <p><a href="/">Trang chủ</a> >>> <a href="/tin-tuc/@category.MetaTitle-@category.ID-page=1">@category.Name</a></p>
+            <div class="clear"></div>
+        </div>
+
+        <!-- nội dung -->
+        <div class="section group">
+            <!--image+detail (phần chính)-->
+            <div class="cont-desc span_1_of_2">
+                <!--image-->
+                <a href="#"><img src=@Model.Image width="200" height="200"></a>
+                <div>
+                    <h2>Tên tin tức: @Model.Name</h2>
+                    <h2>Alias: @Model.MetaTitle</h2>
+                    <h2>Danh mục: @Model.CategoryID</h2>
+                    <h2>Ngày đăng: @Model.CreatedDate</h2>
+                    <h2>Đăng bởi: @Model.CreatedBy</h2>
+                    <h2>Mô tả: @Model.Description</h2>
+
+                    <div class="clear"></div>
+                    <!--Chi tiết tin tức-->
+                    <h2>Chi tiết: </h2>
+                    @Html.Raw(Model.Detail)
+                    <div class="clear"></div>
+                    <br />
+                    <!--thẻ tags-->
+                    <h2>Thẻ: </h2>
+                    <ul>
+                        <li>
+                            @foreach (var item in tags)
+                            {
+                                <a href="/tag/@item.ID">@item.Name </a>
+                            }
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- header tin tức liên quan-->
+                <div class="content_bottom">
+                    <div class="heading">
+                        <h3>Tin tức liên quan</h3>
+                    </div>
+                    <div class="see">
+                        <p><a href="/tin-tuc">Xem tất cả</a></p>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <!-- tin tức liên quan -->
+                <div class="section group">
+                    @foreach (var item in relatedContents)
+                    {
+                        var url = "/tin-tuc/" + item.MetaTitle + "-" + item.ID;
+                        <div class="grid_1_of_4 images_1_of_4">
+                            <a href="@url"><img src="@item.Image" alt=""></a>
+                            @item.Name
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- góc menu bên phải-->
+            <div class="rightsidebar span_3_of_1">
+                <!--danh mục tin tức-->
+                @{ Html.RenderAction("Category", "Content");}
+
+                <!-- tin tức liên quan -->
+                @foreach (var item in relatedContents)
+                {
+                    var url = "/tin-tuc/" + item.MetaTitle + "-" + item.ID;
+                    <div class="image group">
+                        <a href="@url"><img src="@item.Image" alt=""></a>
+                        @item.Name
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>

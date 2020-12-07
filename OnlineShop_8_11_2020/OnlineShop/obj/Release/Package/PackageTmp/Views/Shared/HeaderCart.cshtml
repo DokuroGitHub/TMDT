@@ -1,0 +1,24 @@
+﻿@model List<OnlineShop.Models.CartItem>
+
+<div class="cart">
+    <p>
+        <span>Giỏ hàng:</span>
+        <div id="dd" class="wrapper-dropdown-2">
+            @Model.Count sản phẩm
+            <ul class="dropdown">
+                @if (Model.Count == 0)
+                {
+                    <li>Bạn chưa bỏ sản phẩm nào vào giỏ</li>
+                }
+                else
+                {
+                    <li>Giỏ hàng có @Model.Count sản phẩm gồm:</li>
+                    foreach (var item in Model)
+                    {
+                        <li> @item.Quantity x @item.Product.Name</li>
+                    }
+                }
+            </ul>
+        </div>
+    </p>
+</div>

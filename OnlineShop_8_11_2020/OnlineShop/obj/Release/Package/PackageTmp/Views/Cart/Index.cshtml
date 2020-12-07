@@ -1,0 +1,62 @@
+﻿@model List<OnlineShop.Models.CartItem>
+@{
+    //Fix cứng
+    ViewBag.Title = "Giỏ hàng";
+    ViewBag.Keywords = "Giỏ hàng của tôi";
+    ViewBag.Description = "Thông tin giỏ hàng";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--ajax cho giỏ hàng-->
+@section jsFooter{
+    <script src="/assets/client/js/controller/cartController.js"></script>
+}
+
+<div class="content">
+    <!-- nội dung -->
+    <div class="section group">
+        @if (Model.Count > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Mã SP</td>
+                        <td>Tên SP</td>
+                        <td>Ảnh SP</td>
+                        <td>Số lượng</td>
+                        <td>Đơn giá</td>
+                        <td>Thành tiền</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Product.ID</td>
+                            <td>@item.Product.Name</td>
+                            <td><img src="@item.Product.Image" width="100" /></td>
+                            <td><input type="text" class="txtQuantity" data-id="@item.Product.ID" value="@item.Quantity" /></td>
+                            <td>@item.Product.Price.GetValueOrDefault(0).ToString("N0")</td>
+                            <td>@((item.Product.Price.GetValueOrDefault(0)*item.Quantity).ToString("N0"))</td>
+                            <td><a href="#" data-id="@item.Product.ID" class="btn-delete">Xóa</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <button id="btnContinue" class="btn">Tiếp tục mua hàng</button>
+            <button id="btnUpdate" class="btn">Cập nhật giỏ hàng</button>
+            <button id="btnDeleteAll" class="btn">Xóa giỏ hàng</button>
+            <button id="btnPayment" class="btn">Thanh toán</button>
+        }
+        else
+        {
+            <span class="alert alert-danger">Chưa có sản phẩm nào trong giỏ hàng</span>
+        }
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,133 @@
+﻿@model List<Model.ViewModel.ProductViewModel>
+@{
+    //làm menu
+    var listProductCategory = (List<Model.EF.ProductCategory>)ViewBag.ListProductCategory;
+
+    var featureProducts = (List<Model.EF.Product>)ViewBag.FeatureProducts;
+    //Fix cứng
+    ViewBag.Title = "Sản phẩm";
+    ViewBag.Keywords = "Sản phẩm mới cập nhật 24/7";
+    ViewBag.Description = "Danh sách sản phẩm tốt nhất vũ trụ";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int i = 0;
+}
+
+<div class="content">
+    <!--header name-->
+    <div class="content_top">
+        <div class="heading">
+            <h3>Danh sách tất cả sản phẩm</h3>
+        </div>
+        <!--clear để tránh chồng chất thành phần-->
+        <div class="clear"></div>
+    </div>
+    <!-- nội dung -->
+    <div class="section group">
+        <!--Chính-->
+        <div class="cont-desc span_1_of_2">
+            <!--liệt kê-->
+
+            @foreach (var item in Model)
+            {
+                if (i % 4 == 0)
+                {
+                    <div class="clear"></div>
+                }
+                i++;
+                var link = "/chi-tiet/" + item.MetaTitle + "-" + item.ID;
+                <div class="grid_1_of_4 images_1_of_4">
+                    <a href="@link" title="@item.Name Còn: @item.Quantity sản phẩm "><img style="height:150px;" src="@item.Images" alt="" /></a>
+                    <h2 style="height:60px; overflow:auto">@item.Name</h2>
+                    <h1 style="height:40px;">@item.CateName</h1>
+                    <div class="price-details">
+                        <div style="height:70px;" class="price-number">
+                            @{
+                                if (item.PromotionPrice != null)
+                                {
+                                    if (item.Price != null)
+                                    {
+                                        <p><span class="rupees"><s>@item.Price.Value.ToString("N0")<ins>đ</ins></s></span></p>
+                                        <p><span class="rupees">@item.PromotionPrice.Value.ToString("N0")<ins>đ</ins></span></p>
+                                    }
+                                    else
+                                    {
+                                        <p><span class="rupees">Liên hệ</span></p>
+                                        <p><span class="rupees">@item.PromotionPrice.Value.ToString("N0")<ins>đ</ins></span></p>
+                                    }
+                                }
+                                else
+                                {
+                                    <p><span class="rupees">@(item.Price.HasValue? item.Price.Value.ToString("N0") : "Liên hệ")<ins>đ</ins></span></p>
+                                }
+                            }
+                        </div>
+                        <div class="add-cart">
+                            <h4><a href="/them-gio-hang?productId=@item.ID&quantity=1">Thêm vào giỏ</a></h4>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            }
+            <div class="clear"></div>
+            <!-- header sản phẩm feature-->
+            <div class="content_bottom">
+                <div class="heading">
+                    <h3>Sản phẩm nổi bật</h3>
+                </div>
+                <div class="see">
+                    <a href="/san-pham-noi-bat/page=1">Xem thêm...</a>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <!-- 4 sản phẩm feature -->
+            <div class="section group">
+                @foreach (var item in featureProducts)
+                {
+                    var url = "/chi-tiet/" + item.MetaTitle + "-" + item.ID;
+                    <div class="grid_1_of_4 images_1_of_4">
+                        <a href="@url" title="@item.Name Còn: @item.Quantity sản phẩm"><img style="height:150px;" src="@item.Image" alt=""></a>
+                        <ul style="height:100px; overflow:auto">@item.Name</ul>
+                        <!-- giá-->
+                        <div style="height:60px;" class="price-number">
+                            @{
+                                if (item.PromotionPrice != null)
+                                {
+                                    if (item.Price != null)
+                                    {
+                                        <p><span class="rupees"><s>@item.Price.Value.ToString("N0")<ins>đ</ins></s></span></p>
+                                        <p><span class="rupees">@item.PromotionPrice.Value.ToString("N0")<ins>đ</ins></span></p>
+                                    }
+                                    else
+                                    {
+                                        <p><span class="rupees">Liên hệ</span></p>
+                                        <p><span class="rupees">@item.PromotionPrice.Value.ToString("N0")<ins>đ</ins></span></p>
+                                    }
+                                }
+                                else
+                                {
+                                    <p><span class="rupees">@(item.Price.HasValue? item.Price.Value.ToString("N0") : "Liên hệ")<ins>đ</ins></span></p>
+                                }
+                            }
+                        </div>
+                        <div class="clear"></div>
+                        <div class="add-cart" style="float:none">
+                            <h4><a href="/them-gio-hang?productId=@item.ID&quantity=1">Thêm vào giỏ</a></h4>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!--bên phải-->
+        <div class="rightsidebar span_3_of_1" margin-right=10px>
+            <!--danh mục sản phẩm-->
+            @{ Html.RenderAction("ProductCategory", "Product");}
+        </div>
+
+    </div>
+
+</div>
+

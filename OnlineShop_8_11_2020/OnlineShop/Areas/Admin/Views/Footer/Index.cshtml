@@ -1,0 +1,95 @@
+﻿@model PagedList.IPagedList<Model.EF.Footer>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Quản lý footer";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Quản lý footer
+    <title>Footer</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+        table {
+            table-layout: fixed;
+            border-collapse: collapse
+        }
+
+            table th {
+                width: 1em;
+            }
+
+        td > div.ex1 {
+            max-height: 100px;
+            overflow: auto;
+        }
+    </style>
+}
+@section jsFooter{
+    <script src="~/assets/admin/js/controller/footerController.js"></script>
+}
+
+<!-- DataTables -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách sản phẩm</h6>
+    </div>
+
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "Footer", FormMethod.Get))
+        {
+            <div class="row form-group">
+                <!--thêm-->
+                <div class="col-sm-12 col-md-6">
+                    <a class="btn btn-primary" href="/Admin/Footer/Create">Thêm mới</a>
+                </div>
+                <!--search-->
+                <div class="col-sm-12 col-md-6">
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100">
+                        <div class="input-group">
+                            <input type="text" value="@ViewBag.searchString" name="searchString" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" placeholder="Nhập từ khóa...">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary btn-user" type="submit">Tìm kiếm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nội dung</th>
+                        <th>Trạng thái</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ID</td>
+                            <td><div class="ex1">@item.Content</div></td>
+                            <td><a href="#" class="btnStatus" data-id="@item.ID">@(item.Status==true? "Kích hoạt" : "Khóa")</a></td>
+                            <td>
+                                <a href="/Admin/Footer/Detail/@item.ID">Preview</a> |
+                                <a href="/Admin/Footer/Edit/@item.ID">Sửa</a> |
+
+                                @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
+                                {
+                                    Confirm = "Bạn có muốn xóa bản ghi này?",
+                                    HttpMethod = "Delete",
+                                    OnSuccess = "location.reload()",
+                                })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }))
+    </div>
+</div>

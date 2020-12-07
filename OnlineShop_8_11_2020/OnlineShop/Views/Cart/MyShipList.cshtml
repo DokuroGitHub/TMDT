@@ -1,0 +1,184 @@
+﻿@model List<Model.ViewModel.ShipViewModel>
+@{
+    //Fix cứng
+    ViewBag.Title = "Đơn đặt hàng của tôi";
+    ViewBag.Keywords = "Đơn đặt hàng của tôi";
+    ViewBag.Description = "Thông tin đơn đặt hàng";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--ajax -->
+@section jsFooter{
+
+}
+
+<div class="content">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+        table {
+            table-layout: fixed;
+            border-collapse: collapse
+        }
+
+            table th {
+                width: 1em;
+            }
+
+        td > div.ex1 {
+            max-height: 100px;
+            overflow: auto;
+        }
+    </style>
+
+    <!-- nội dung -->
+    <div class="section group">
+        @if (Model != null)
+        {
+            <!--Danh sách đơn hàng-->
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th style="width:0.6%">Mã</th>
+                            <th>Khách hàng</th>
+                            <th>SĐT</th>
+                            <th>Địa chỉ</th>
+                            <th style="width:6%">Hàng trong đơn</th>
+                            <th style="width:1.6%">Shipper</th>
+                            <th style="width:1.6%">Trạng thái</th>
+                            <th style="width:1.7%">Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>@item.OrderID</td>
+                            <td><a href="/trang-ca-nhan?userID=@item.CustomerID">@item.ShipToName</a></td>
+                            <td style="overflow:auto">@item.ShipMobile</td>
+                            <td>@item.ShipAddress</td>
+                            <td>
+                                <div style="height:150px; overflow:auto">
+                                    <p class="ex1">
+                                    <p>Số loại sản phẩm: @item.ShipItemList.Count()</p>
+                                    <p>Số sản phẩm: @item.ShipItemList.Sum(x => x.Quantity)</p>
+                                    <p>Mã giảm giá: @item.CouponList.Count()</p>
+                                    @foreach (var shipItem in item.CouponList)
+                                    {
+                                        string vndDiscountAmount = (shipItem.DiscountAmount).ToString("N0");
+                                        string dollarDiscountAmount = (shipItem.DiscountAmount / 20000).ToString("N2");
+                                        if (shipItem.ByPercentage == true)
+                                        {
+                                            string temp = shipItem.DiscountBy.ToString() + "%";
+                                            <p>Tên: @shipItem.Name, Mã: @shipItem.Code, Giảm: @temp, Giảm được: <a title="$@dollarDiscountAmount">@vndDiscountAmount<ins>đ</ins></a>&nbsp;</p>
+                                            <div class="clear"></div>
+                                        }
+                                        else
+                                        {
+                                            string vndGiam = shipItem.DiscountBy.ToString("N0");
+                                            string dollarGiam = (shipItem.DiscountBy / 20000).ToString("N2");
+                                            <p>Tên: @shipItem.Name, Mã: @shipItem.Code, Giảm: <a title="$@dollarGiam">@vndGiam<ins>đ</ins></a>, Giảm được: <a title="$@dollarDiscountAmount">@vndDiscountAmount<ins>đ</ins></a>&nbsp;</p>
+                                            <div class="clear"></div>
+                                        }
+                                    }
+                                    @{
+                                        decimal vndTongCong = 0;
+                                        decimal dollarTongCong = 0;
+                                    }
+                                    @foreach (var shipItem in item.ShipItemList)
+                                    {
+                                        vndTongCong += shipItem.TotalPrice;
+                                        dollarTongCong += decimal.Parse((shipItem.TotalPrice / 20000).ToString("N2"));
+                                    }
+                                    @foreach (var shipItem in item.CouponList)
+                                    {
+                                        vndTongCong -= shipItem.DiscountAmount;
+                                        dollarTongCong -= decimal.Parse((shipItem.DiscountAmount / 20000).ToString("N2"));
+                                    }
+                                    @{
+                                        <p>Tổng cộng: <a title="$@dollarTongCong.ToString("N2")">@(vndTongCong.ToString("N0"))<ins>đ</ins></a></p>
+                                    }
+                                    @foreach (var shipItem in item.ShipItemList)
+                                    {
+                                        //xử lý prices
+                                        string vndGia = shipItem.Price.ToString("N0");
+                                        string vndThanhTien = shipItem.TotalPrice.ToString("N0");
+                                        string dollarGia = (shipItem.Price / 20000).ToString("N2");
+                                        string dollarThanhTien = (shipItem.TotalPrice / 20000).ToString("N2");
+                                        var url = "/chi-tiet/" + shipItem.MetaTitle + "-" + shipItem.ProductID;
+                                        <p>
+                                            <a href="@url" title="@shipItem.Name">
+                                                <img src="@shipItem.Image" style="border-style:solid; border-width:2px; float:left; height:70px; margin:2px; " alt="@shipItem.Name" title="@shipItem.Name" />
+                                            </a>Mã sp: @shipItem.ProductID, Tên: @shipItem.Name, Giá: <a title="$@dollarGia">@vndGia<ins>đ</ins></a>, Số lượng: @shipItem.Quantity, Thành tiền: <a title="$@dollarThanhTien">@vndThanhTien<ins>đ</ins></a>&nbsp;
+                                        </p>
+                                        <div class="clear"></div>
+                                    }
+                                </div>
+
+                            </td>
+                            <td><a href="/trang-ca-nhan?userID=@item.ShipperID" title="Đến trang cá nhân của người giao hàng.">@item.ShipperName</a></td>
+                            <!--có thể fix, nếu trạng thái Không nhận ship thì nút Nhận biến mất-->
+                            @if (item.Status == -1)
+                            {
+                                <td>Chưa Shipper nào nhận</td>
+                                <!--chức năng hủy đơn hàng-->
+                                <td>
+                                    <a href="#" data-id="@item.OrderID" class="btnCancelOrder">Hủy đặt hàng</a>
+                                    <!--script ajax//chưa cần-->
+                                    <script>
+                                        //Delete 1 sản phẩm trong giỏ
+                                        $('.btnCancelOrder').off('click').on('click', function (e) {
+                                            e.preventDefault();
+                                            $.ajax({
+                                                url: '/Cart/CancelOrder',
+                                                data: { id: $(this).data('id') },
+                                                dataType: 'json',
+                                                type: 'POST',
+                                                success: function (res) {
+                                                    if (res.status == true) {
+                                                        window.location.href = "/don-dat-hang-cua-toi";
+                                                    }
+                                                }
+                                            })
+                                        });
+                                    </script>
+                                </td>
+                            }
+                            else if (item.Status == 1)
+                            {
+                                <td>Đang được ship</td>
+                                <!--ko có chức năng hủy đơn hàng-->
+                                <td><a title="Đơn giản là ngồi chờ...">Ngồi chờ</a></td>
+                            }
+                            else if (item.Status == 2)
+                            {
+                                <td>Đã được ship</td>
+                                <!--ko có chức năng hủy đơn hàng-->
+                                <td><a href="/lien-he" title="Đánh giá trang web ngay thôi.">Đánh giá</a></td>
+                            }
+                            else
+                            {
+                                <td>Đơn hàng đã hủy</td>
+                                <!--ko có chức năng hủy đơn hàng-->
+                                <td><a href="/lien-he">Đánh giá</a></td>
+                            }
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <button id="btnContinue" class="btn">Tiếp tục mua hàng</button>
+            <script>
+                //Thanh toán trực tiếp bằng tiền mặt sau khi giao hàng
+                $('#btnContinue').off('click').on('click', function () {
+                    window.location.href = "/";
+                });
+            </script>
+        }
+        else
+        {
+            <span class="alert alert-danger">Bạn chưa có đơn hàng nào.</span>
+        }
+    </div>
+</div>

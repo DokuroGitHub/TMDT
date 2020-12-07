@@ -1,0 +1,95 @@
+﻿@model List<Model.ViewModel.ContentViewModel>
+@{
+    var category = (Model.EF.Category)ViewBag.Category;
+    ViewBag.Title = category.Name;
+    ViewBag.Keyword = category.MetaKeywords;
+    ViewBag.Description = category.MetaDescriptions;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content">
+    <!--header category name //ok-->
+    <div class="content_top">
+        <div class="heading">
+            <h3>@category.Name</h3>
+        </div>
+        <div class="see">
+            <p><a href="/tin-tuc">Xem tất cả tin tức</a></p>
+        </div>
+        <!--clear để tránh chồng chất thành phần-->
+        <div class="clear"></div>
+    </div>
+    <!--danh sách tin tức //ok-->
+    <div class="main">
+        <div class="content">
+            @foreach (var item in Model)
+            {
+                var link = "/tin-tuc/" + item.MetaTitle + "-" + item.ID;
+                <div class="image group">
+                    <div class="grid images_3_of_1">
+                        <a href="@link"><img style="height:250px;max-width:250px;width: expression(this.width > 250 ? 250: true);" src="@item.Image" alt="" /></a>
+                    </div>
+                    <div class="grid news_desc">
+                        <h3><a href="/tin-tuc/@item.MetaTitle-@item.ID">@item.Name</a></h3>
+                        <h4>Posted on @item.CreatedDate by <span><a href="#">@item.CreatedBy</a></span></h4>
+                        <h4>Danh mục: @item.CateName</h4>
+                        <h4>Mô tả: @item.Description</h4>
+                        <h4>Thẻ: @item.Tags</h4>
+                        <h4>Ngôn ngữ: @(item.Language=="vi"? "Tiếng Việt":"English")</h4>
+                        <h4>Lượt xem: @item.ViewCount.GetValueOrDefault(0)</h4>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="clear"></div>
+    </div>
+    <!--Phân trang //ok-->
+    @if (ViewBag.TotalPage > 0)
+    {
+        //MaxPage = 5, First = 1, Last = TotalPage
+        var pageDisplay = (int)ViewBag.MaxPage;
+        int totalPage = (int)ViewBag.TotalPage;
+        int currentPage = (int)ViewBag.Page;
+
+        //tạo numeric links
+        var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+        var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+        var link = "/tin-tuc/" + category.MetaTitle + "-" + category.ID;
+        <div class="clear"></div>
+        <nav aria-label="...">
+            <ul class="pagination">
+                @if (currentPage > ViewBag.First)
+                {
+                    <li><a href="@link-page=@ViewBag.First" title="Trang đầu[1]"><<</a></li>
+                    <li><a href="@link-page=@ViewBag.Prev" title="Trang trước"><</a></li>
+
+                }
+                @for (int i = startPageIndex; i <= endPageIndex; i++)
+                {
+                    if (i == currentPage)
+                    {
+                        <li class="active"><a href="@link-page=@i" title="Trang @i">@i</a></li>
+
+                    }
+                    else
+                    {
+                        <li><a href="@link-page=@i" title="Trang @i" class="page-link">@i</a></li>
+
+                    }
+                }
+                @if (currentPage < totalPage)
+                {
+                    <li><a href="@link-page=@ViewBag.Next" title="Trang sau">></a></li>
+                    <li><a href="@link-page=@ViewBag.Last" title="Trang cuối[@totalPage]">>></a></li>
+
+                }
+            </ul>
+        </nav>
+    }
+    else
+    {
+        <span>Không có bản ghi nào</span>
+    }
+</div>
+

@@ -1,0 +1,46 @@
+//fix thành web bán sách  // tạm thời done //chuyển IEnumerable sang List(?ko chắc)
+//load province vs distric ko dc nhung change save dc
+
+                new { controller = "Base|Category|Content|Footer|Home|Login|Product|User" },
+
+href="/Login/Logout" -> Admin/Home/Login/Logout
+Admin/abc/cde : return RedirectToAction("Index", "Home") -> Admin/Home/Index
+Admin/abc/cde : <a class="btn btn-primary" href="/Admin/Login/Logout">THOÁT</a>  ->Admin/Login/Logout
+
+//Tự động hiểu sau ? & là biến, sau = là giá trị
+<a href="/them-gio-hang?productId=@item.ID&quantity=1">
+
+url: "them-gio-hang",
+defaults: new { controller = "Cart", action = "AddItem",
+
+//CartController
+public ActionResult AddItem(long productId, int quantity)
+
+
+
+<a href="/san-pham/@item.MetaTitle-@item.ID-page=1">
+
+//Tự động hiểu trong {} là biến
+url: "san-pham/{metatitle}-{categoryID}-page={pageIndex}",
+defaults: new { controller = "Product", action = "ProductWithCategoryID",
+
+//ProductController
+public ActionResult ProductWithCategoryID(long categoryID, int pageIndex, int pageSize = 2)
+
+
+//////// occur order:
+
+OnAuthentication - top 1 run first
+OnAuthenticationChallenge - top 2
+
+//khi hàm giới hạn quyền
+OnAuthorization - run [before] any function, to make security decisions
+
+OnActionExecuting – called [when] a controller action is executed
+//qua view xong
+OnActionExecuted – called [after] a controller action is executed
+
+OnResultExecuting – called [before] a controller action result is executed
+OnResultExecuted – called [after] a controller action result is executed
+
+OnException - Exception filters run when errors occur

@@ -1,0 +1,263 @@
+﻿@model Model.EF.Product
+@{
+    ViewBag.Title = "Detail";
+    ViewBag.Title = Model.MetaTitle;
+    ViewBag.Keyword = Model.MetaKeywords;
+    ViewBag.Description = Model.MetaDescriptions;
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listMoreImages = (List<string>)ViewBag.ListImageSource;
+    var category = (Model.EF.ProductCategory)ViewBag.ProductCategory;
+    var relatedProducts = (List<Model.EF.Product>)ViewBag.RalatedProducts;
+
+}
+
+<header>
+    <!--header cho Product->Detail-->
+    <script src="/assets/client/js/easyResponsiveTabs.js" type="text/javascript"></script>
+    <link href="/assets/client/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" media="all" />
+    <link rel="stylesheet" href="/assets/client/css/global.css">
+    <script src="/assets/client/js/slides.min.jquery.js"></script>
+    <!--script function slides cho product-->
+    <script>
+        $(function () {
+            $('#products').slides({
+                preload: true,
+                preloadImage: '/assets/client/images/loading.gif',
+                effect: 'slide, fade',
+                crossfade: true,
+                slideSpeed: 350,
+                fadeSpeed: 500,
+                generateNextPrev: true,
+                generatePagination: false
+            });
+        });
+    </script>
+</header>
+
+<body>
+    <!--phải nhận tham số prodID-->
+    <div class="content">
+        <!--header name-->
+        <div class="content_top">
+            <div class="heading">
+                <p><a href="/">Trang chủ</a> >>> <a href="/san-pham/@category.MetaTitle-@category.ID-page=1">@category.Name</a></p>
+            </div>
+            <!--clear để tránh chồng chất thành phần-->
+            <div class="clear"></div>
+        </div>
+
+        <!-- nội dung -->
+        <div class="section group">
+            <!--Chính-->
+            <div class="cont-desc span_1_of_2">
+                <!--ảnh sản phẩm + info-->
+                <div class="product-details">
+                    <!--image sản phẩm-->
+                    <div class="grid images_3_of_2">
+                        <div id="container">
+                            <div id="products_example">
+                                <div id="products">
+                                    <div class="slides_container">
+                                        <!--ảnh chính-->
+                                        <a><img title="@Model.Name Còn: @Model.Quantity sản phẩm" src=@Model.Image alt="Ảnh sản phẩm 1" style="height:274px;"/></a>
+                                        <!--đổ MoreImages ra-->
+                                        @foreach (var image in listMoreImages)
+                                        {
+                                            <a><img title="@Model.Name Còn: @Model.Quantity sản phẩm" src=@image alt="Ảnh sản phẩm" style="height:274px"/></a>
+                                        }
+                                    </div>
+                                    <ul class="pagination">
+                                        <li><a href="#"><img src=@Model.Image alt="Ảnh thumbnail sản phẩm" style=" width: auto; height: 100%; " /></a></li>
+                                        @foreach (var image in listMoreImages)
+                                        {
+                                            <li><a href="#"><img src=@image alt="Ảnh thumbnail sản phẩm" style=" width: auto; height: 100%; " /></a></li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--bên cạnh image sản phẩm-->
+                    <div class="desc span_3_of_2">
+                        <h2>@Model.Name</h2>
+                        <p>@Model.Description</p>
+                        <!--giá-->
+                        <div class="price">
+                            <div class="price-number">
+                                @{
+                                    if (Model.PromotionPrice != null)
+                                    {
+                                        if (Model.Price != null)
+                                        {
+                                            <p><span class="rupees"><s>@Model.Price.Value.ToString("N0")<ins>đ</ins></s></span></p>
+                                            <p><span class="rupees">@Model.PromotionPrice.Value.ToString("N0")<ins>đ</ins></span></p>
+                                        }
+                                        else
+                                        {
+                                            <p><span class="rupees">Liên hệ</span></p>
+                                            <p><span class="rupees">@Model.PromotionPrice.Value.ToString("N0")<ins>đ</ins></span></p>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p><span class="rupees">@(Model.Price.HasValue? Model.Price.Value.ToString("N0") : "Liên hệ")<ins>đ</ins></span></p>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <!--chia sẻ+thêm vào giỏ-->
+                        <div class="share-desc">
+                            <div class="share">
+                                <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                                <div class="addthis_inline_share_toolbox_j5zp" alt="Share buttons"></div>
+                            </div>
+                            <div class="button"><span><a href="/them-gio-hang?productId=@Model.ID&quantity=1">Thêm vào giỏ</a></span></div>
+                            <div class="clear"></div>
+                        </div>
+                        <!--yêu thích + so sánh-->
+                        <div class="wish-list">
+                            <ul>
+                                <li class="wish"><a href="#">Thêm vào yêu thích</a></li>
+                                <li class="compare"><a href="#">So sánh</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <!--chi tiết dùng responsiveTab-->
+                <div class="product_desc">
+                    <div id="horizontalTab">
+                        <ul class="resp-tabs-list">
+                            <li>Chi tiết</li>
+                            <li>Giới thiệu</li>
+                            <div class="clear"></div>
+                        </ul>
+                        <div class="resp-tabs-container">
+                            <div class="product-desc">
+                                <!--Chi tiết sản phẩm-->
+                                @Html.Raw(Model.Detail)
+                            </div>
+                            <div class="product-desc">
+                                <!--Chi tiết sản phẩm-->
+                                @Html.Raw(Model.Description)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--script cho responsiveTab-->
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('#horizontalTab').easyResponsiveTabs({
+                            type: 'default', //Types: default, vertical, accordion
+                            width: 'auto', //auto or any width like 600px
+                            fit: true   // 100% fit in a container
+                        });
+                    });
+                </script>
+
+                <!-- header sản phẩm liên quan-->
+                <div class="content_bottom">
+                    <div class="heading">
+                        <h3>Sản phẩm liên quan</h3>
+                    </div>
+                    <div class="see">
+                        <a href="/san-pham/@category.MetaTitle-@category.ID-page=1">Xem thêm...</a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <!-- 4 sản phẩm liên quan -->
+                <div class="section group">
+                    @foreach (var item in relatedProducts)
+                    {
+                        var url = "/chi-tiet/" + item.MetaTitle + "-" + item.ID;
+                        <div class="grid_1_of_4 images_1_of_4">
+                            <a href="@url" title="@item.Name Còn: @item.Quantity sản phẩm"><img style="height:220px" src="@item.Image" alt=""></a>
+                            <ul style="height:60px;overflow:auto">@item.Name</ul>
+                            <!-- giá-->
+                            <div class="price-number">
+                                @{
+                                    if (item.PromotionPrice != null)
+                                    {
+                                        if (item.Price != null)
+                                        {
+                                            <p><span class="rupees"><s>@item.Price.Value.ToString("N0")<ins>đ</ins></s></span></p>
+                                            <p><span class="rupees">@item.PromotionPrice.Value.ToString("N0")<ins>đ</ins></span></p>
+                                        }
+                                        else
+                                        {
+                                            <p><span class="rupees">Liên hệ</span></p>
+                                            <p><span class="rupees">@item.PromotionPrice.Value.ToString("N0")<ins>đ</ins></span></p>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p><span class="rupees">@(item.Price.HasValue? item.Price.Value.ToString("N0") : "Liên hệ")<ins>đ</ins></span></p>
+                                    }
+                                }
+                            </div>
+                            <div class="clear"></div>
+                            <div class="add-cart" style="float:none">
+                                <h4><a href="/them-gio-hang?productId=@Model.ID&quantity=1">Thêm vào giỏ</a></h4>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!--bên phải-->
+            <div class="rightsidebar span_3_of_1">
+                <!--danh mục sản phẩm-->
+                @{ Html.RenderAction("ProductCategory", "Product");}
+
+                <div class="subscribe">
+                    <h2>Newsletters Signup</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.......</p>
+                    <div class="signup">
+                        <form>
+                            <input type="text" value="E-mail address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-mail address';"><input type="submit" value="Sign up">
+                        </form>
+                    </div>
+                </div>
+                <div class="community-poll">
+                    <h2>Community POll</h2>
+                    <p>What is the main reason for you to purchase products online?</p>
+                    <div class="poll">
+                        <form>
+                            <ul>
+                                <li>
+                                    <input type="radio" name="vote" class="radio" value="1">
+                                    <span class="label"><label>More convenient shipping and delivery </label></span>
+                                </li>
+                                <li>
+                                    <input type="radio" name="vote" class="radio" value="2">
+                                    <span class="label"><label for="vote_2">Lower price</label></span>
+                                </li>
+                                <li>
+                                    <input type="radio" name="vote" class="radio" value="3">
+                                    <span class="label"><label for="vote_3">Bigger choice</label></span>
+                                </li>
+                                <li>
+                                    <input type="radio" name="vote" class="radio" value="5">
+                                    <span class="label"><label for="vote_5">Payments security </label></span>
+                                </li>
+                                <li>
+                                    <input type="radio" name="vote" class="radio" value="6">
+                                    <span class="label"><label for="vote_6">30-day Money Back Guarantee </label></span>
+                                </li>
+                                <li>
+                                    <input type="radio" name="vote" class="radio" value="7">
+                                    <span class="label"><label for="vote_7">Other.</label></span>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- share buttons//Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5fbb55ec4eefbb77"></script>
+</body>
+
+

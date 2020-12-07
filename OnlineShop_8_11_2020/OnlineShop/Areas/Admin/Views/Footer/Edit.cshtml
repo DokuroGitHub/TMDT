@@ -1,0 +1,63 @@
+﻿@model Model.EF.Footer
+
+@{
+    ViewBag.Title = "Sửa footer";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Sửa footer
+}
+
+@section jsFooter{
+    <script>
+        var editor = CKEDITOR.replace('txtDetail', { contentsCss: '/assets/admin/js/plugins/ckeditor/contents.css' });
+        CKEDITOR.on("instanceCreated", function (event) {
+            event.editor.on("change", function () {
+                $("#trackingDiv").html(event.editor.getData());
+            });
+        });
+    </script>
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Footer ID: @Model.ID</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <!--iD-->
+        <div class="form-group">
+            @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <!--Content-->
+        <div class="form-group" id="trackingDiv">
+            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div ass="col-md-10">
+                @Html.TextAreaFor(model => model.Content, new { @class = "form-control", @id = "txtDetail" })
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <!--Status-->
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Status, new { @checked = "true" })
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <!--Cập nhật-->
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Cập nhật" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}

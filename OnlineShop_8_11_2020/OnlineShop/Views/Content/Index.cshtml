@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Model.EF.Content>
+
+@{
+    //Fix cứng
+    ViewBag.Title = "Tin tức";
+    ViewBag.Keywords = "Tin tức cập nhật 24/7";
+    ViewBag.Description = "Mô tả tin tức hay nhất vũ trụ";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <!--header category name-->
+    <div class="content_top">
+        <div class="heading">
+            <h3>Danh sách tin tức</h3>
+        </div>
+        <div class="see">
+            <p><a href="/tin-tuc">Xem tất cả tin tức</a></p>
+        </div>
+        <!--clear để tránh chồng chất thành phần-->
+        <div class="clear"></div>
+    </div>
+    <!--danh sách tin tức-->
+    <div class="main">
+        <div class="content">
+            @foreach (var item in Model)
+            {
+                <div class="image group">
+                    <div class="grid images_3_of_1">
+                        <img style="height:250px;max-width:250px;width: expression(this.width > 250 ? 250: true);" src="@item.Image" alt="" />
+                    </div>
+                    <div class="grid news_desc">
+                        <h3><a href="/tin-tuc/@item.MetaTitle-@item.ID">@item.Name</a></h3>
+                        <h4>Posted on @item.CreatedDate by <span><a href="#">@item.CreatedBy</a></span></h4>
+                        @item.Description
+                    </div>
+                </div>
+            }
+        </div>
+    </div>

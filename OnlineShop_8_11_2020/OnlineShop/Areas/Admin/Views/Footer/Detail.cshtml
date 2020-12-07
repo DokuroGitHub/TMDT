@@ -1,0 +1,36 @@
+﻿@model Model.EF.Footer
+@{
+    ViewBag.Title = "Chi tiết footer";
+}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta name="keywords" content=@ViewBag.Keywords />
+    <meta name="description" content=@ViewBag.Description />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--nhúng file css-->
+    <link href="/assets/client/css/bootstrap.css" rel="stylesheet" />
+    <link href="/assets/client/css/bootstrap-social.css" rel="stylesheet" />
+    <link href="/assets/client/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/assets/client/css/bootstrap-theme.css" rel="stylesheet" />
+    <link href="/assets/client/css/jquery-ui.css" rel="stylesheet" />
+    <link href="/assets/client/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/assets/client/css/slider.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+<body>
+    <!--footer-->
+    <div class="footer">
+        @Html.Raw(Model.Content)
+    </div>
+    <div class="clear"></div>
+    <div style="width:800px; margin:0 auto;">
+        <a href="/Admin/Footer/Edit/@Model.ID" title="Edit" class="btn btn-success">Chỉnh sửa footer</a>
+        <a href="/Admin/Footer/Index" title="Index" class="btn btn-default">Trở lại</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,136 @@
+﻿@model List<Model.ViewModel.ShipViewModel>
+@{
+    ViewBag.Title = "Danh sách đơn đặt hàng của tôi";
+    Layout = "~/Areas/Shipper/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Danh sách đơn hàng của tôi
+    <title>Đơn hàng của tôi</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+        table {
+            table-layout: fixed;
+            border-collapse: collapse
+        }
+
+            table th {
+                width: 1em;
+            }
+
+        td > div.ex1 {
+            max-height: 100px;
+            overflow: auto;
+        }
+    </style>
+}
+@section jsFooter{
+
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách đơn hàng</h6>
+    </div>
+
+    <div class="card-body">
+        <!--Search// cần fix MyShipList có tham số searchString-->
+        @using (Html.BeginForm("MyShipList", "Ship", FormMethod.Get))
+        {
+            <div class="row form-group">
+                <div class="col-sm-12 col-md-6">
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100">
+                        <div class="input-group">
+                            <input type="text" value="@ViewBag.searchString" name="searchString" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" placeholder="Nhập từ khóa...">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary btn-user" type="submit">Tìm kiếm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+        <!--Danh sách đơn hàng-->
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th style="width:1%">Mã</th>
+                        <th>Khách hàng</th>
+                        <th>SĐT</th>
+                        <th>Địa chỉ</th>
+                        <th style="width:6%">Hàng trong đơn</th>
+                        <th style="width:1.6%">Shipper</th>
+                        <th style="width:1.6%">Trạng thái</th>
+                        <th style="width:1.7%">Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.OrderID</td>
+                            <td><a href="/trang-ca-nhan?userID=@item.CustomerID">@item.ShipToName</a></td>
+                            <td>@item.ShipMobile</td>
+                            <td>@item.ShipAddress</td>
+                            <td>
+                                <div class="ex1">
+                                    <p>Số loại sản phẩm: @item.ShipItemList.Count()</p>
+                                    <p>Số sản phẩm: @item.ShipItemList.Sum(x => x.Quantity)</p>
+                                    <p>Tổng cộng: @item.ShipItemList.Sum(x => x.TotalPrice)<ins>đ</ins></p>
+                                    <p>Danh sách sản phẩm:</p>
+                                    @foreach (var shipItem in item.ShipItemList)
+                                    {
+                                        <a title="@shipItem.Name"><img height="50" src="@shipItem.Image" alt="@shipItem.Name" /></a><p>Mã sp: @shipItem.ProductID, Tên: @shipItem.Name, Giá: @shipItem.Price, Số lượng: @shipItem.Quantity, Thành tiền: @shipItem.TotalPrice<ins>đ</ins></p>
+                                        <br />
+                                    }
+                                </div>
+                            </td>
+                            <td><a href="/trang-ca-nhan?userID=@item.ShipperID">@item.ShipperName</a></td>
+                            <!--có thể fix, nếu trạng thái Không nhận ship thì nút Nhận biến mất-->
+                            @if (item.Status == -1)
+                            {
+                                <td>Chưa Shipper nào nhận</td>
+                            }
+                            else if (item.Status == 1)
+                            {
+                                <td>Đang được ship</td>
+                            }
+                            else if (item.Status == 2)
+                            {
+                                <td>Đã được ship</td>
+                            }
+                            else
+                            {
+                                <td>Không nhận ship</td>
+                            }
+                            <td>
+                                <!--id chính là biến truyền vào trong hàm TakeShip -->
+                                @Ajax.ActionLink("Đã giao", "DoneShip", new { @id = item.OrderID }, new AjaxOptions
+                                {
+                               Confirm = "Bạn có chắc đã giao đơn ship này?",
+                               HttpMethod = "POST",
+                               OnSuccess = "location.reload()"
+                                })
+                                <br />
+                                -------
+                                <br />
+                                @Ajax.ActionLink("Hủy giao", "CancelShip", new { @id = item.OrderID }, new AjaxOptions
+                                {
+                                Confirm = "Bạn có muốn hủy đơn ship này?",
+                                HttpMethod = "POST",
+                                OnSuccess = "location.reload()"
+                                })
+                         
+                                <!--xài dc-->
+                                @*<form action="TakeShip?id=@item.OrderID" method="post">
+                                        <button type="submit" name="your_name" value="@item.OrderID" class="btn-link">Go</button>
+                                    </form>*@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

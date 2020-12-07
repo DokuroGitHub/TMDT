@@ -1,0 +1,14 @@
+﻿@{
+    //Fix cứng
+    ViewBag.Title = "Sản phẩm đã hết";
+    ViewBag.Keywords = "Lỗi. Số lượng sản phẩm đã hết.";
+    ViewBag.Description = "Lỗi đặt mua hàng hết số lượng.";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="alert alert-danger">
+    Rất tiếc. Trong giỏ có sản phẩm đã bán hết hàng.
+</div>
+<a href="/" title="Trang chủ" class="btn btn-success">Tiếp tục mua hàng</a>
+<a href="/gio-hang" title="Giỏ hàng của tôi" class="btn btn-default">Giỏ hàng của tôi</a>

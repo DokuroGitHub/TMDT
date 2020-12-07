@@ -1,0 +1,104 @@
+﻿@model Model.EF.User
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Quản lý người dùng
+}
+<body>
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Thêm mới người dùng</h1>
+        <p class="mb-4">
+            DataTables is a third party plugin that is used to generate the demo table below.
+            For more information about DataTables, please visit the <a target="_blank"
+                                                                       href="https://datatables.net">official DataTables documentation</a>.
+        </p>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Nhập thông tin người dùng</h6>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Create", "User", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                    <fieldset>
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => model.UserName, new
+                            {
+                                @class = "form-control form-control-user",
+                                @id = "exampleInputPassword",
+                                @placeholder = "Tên tài khoản"
+                            })
+                        </div>
+                        <div class="form-group">
+                            @Html.PasswordFor(model => model.Password, new
+                            {
+                                @type = "password",
+                                @class = "form-control form-control-user",
+                                @id = "exampleInputPassword",
+                                @placeholder = "Mật khẩu"
+                            })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => model.Name, new
+                            {
+                                @class = "form-control form-control-user",
+                                @id = "exampleInputPassword",
+                                @placeholder = "Họ tên"
+                            })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => model.Address, new
+                            {
+                                @class = "form-control form-control-user",
+                                @id = "exampleInputPassword",
+                                @placeholder = "Địa chỉ"
+                            })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => model.Email, new
+                            {
+                                @class = "form-control form-control-user",
+                                @id = "exampleInputPassword",
+                                @placeholder = "Email"
+                            })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => model.Phone, new
+                            {
+                                @class = "form-control form-control-user",
+                                @id = "exampleInputPassword",
+                                @placeholder = "Số điện thoại"
+                            })
+                        </div>
+
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(model => model.Status, htmlAttributes: new { @checked = true })
+                                Trạng thái active
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-lg btn-success btn-block">Thêm mới</button>
+                    </fieldset>
+                }
+            </div>
+        </div>
+
+    </div>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+</body>
+
+

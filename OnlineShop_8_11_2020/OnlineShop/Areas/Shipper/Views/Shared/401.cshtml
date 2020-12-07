@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Lỗi 401";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Lỗi truy cập
+}
+
+<div class="alert alert-danger">
+    <!--RoleID từ ViewData-->
+    <!--cần đổi tên thành ViewBag.RoleName-->
+    Bạn không có quyền truy cập @ViewBag.RoleID!!
+</div>
+

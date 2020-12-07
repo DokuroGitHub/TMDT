@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Model.EF.Content>
+
+@{
+    var tag = (Model.EF.Tag)ViewBag.Tag;
+    ViewBag.Title = tag.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //có danh sách content với tagID
+}
+
+<div class="content">
+    <!--header tag name-->
+    <div class="content_top">
+        <div class="heading">
+            <h3>@tag.Name</h3>
+        </div>
+        <div class="see">
+            <p><a href="/tin-tuc">Xem tất cả tin tức</a></p>
+        </div>
+        <!--clear để tránh chồng chất thành phần-->
+        <div class="clear"></div>
+    </div>
+    <!--danh sách tin tức-->
+
+
+
+    <div class="section group">
+        <!--liệt kê-->
+        @foreach (var item in Model)
+        {
+            <div class="image group">
+                <div class="grid images_3_of_1">
+                    <img src="@item.Image" alt="" />
+                </div>
+                <div class="grid news_desc">
+                    <h3><a href="/tin-tuc/@item.MetaTitle-@item.ID">@item.Name</a></h3>
+                    <h4>Posted on @item.CreatedDate by <span><a href="#">@item.CreatedBy</a></span></h4>
+                    @item.Description
+                </div>
+            </div>
+        }
+        <!--Phân trang-->
+        @if (ViewBag.TotalPage > 0)
+        {
+            //MaxPage = 5, First = 1, Last = TotalPage
+            var pageDisplay = (int)ViewBag.MaxPage;
+            int totalPage = (int)ViewBag.TotalPage;
+            int currentPage = (int)ViewBag.Page;
+
+            //tạo numeric links
+            var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+            var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+            var link = "/tag/" + tag.ID;
+            <div class="clear"></div>
+            <nav aria-label="...">
+                <ul class="pagination">
+                    @if (currentPage > ViewBag.First)
+                    {
+                        <li><a href="@link-page=@ViewBag.First" title="Trang đầu[1]"><i class="fa fa-angle-double-left"></i></a></li>
+                        <li><a href="@link-page=@ViewBag.Prev" title="Trang trước"><i class="fa fa-angle-left"></i></a></li>
+
+                    }
+                    @for (int i = startPageIndex; i <= endPageIndex; i++)
+                    {
+                        if (i == currentPage)
+                        {
+                            <li class="active"><a href="@link-page=@i" title="Trang @i">@i</a></li>
+
+                        }
+                        else
+                        {
+                            <li><a href="@link-page=@i" title="Trang @i" class="page-link">@i</a></li>
+
+                        }
+                    }
+                    @if (currentPage < totalPage)
+                    {
+                        <li><a href="@link-page=@ViewBag.Next" title="Trang sau"><i class="fa fa-angle-right"></i></a></li>
+                        <li><a href="@link-page=@ViewBag.Last" title="Trang cuối[@totalPage]"><i class="fa fa-angle-double-right"></i></a></li>
+
+                    }
+                </ul>
+            </nav>
+        }
+        else
+        {
+            <span>Không có bản ghi nào</span>
+        }
+    </div>
+</div>

@@ -1,0 +1,124 @@
+﻿<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!-- Lấy title+keywords+description từ viewbag-->
+    <title>@ViewBag.Title</title>
+    <meta name="keywords" content=@ViewBag.Keywords />
+    <meta name="description" content=@ViewBag.Description />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--nhúng file css-->
+    <!--dùng bootstrap làm thẻ sai thông số-->
+    @*<link href="/assets/client/css/bootstrap.css" rel="stylesheet" />
+        <link href="/assets/client/css/bootstrap-social.css" rel="stylesheet" />
+        <link href="/assets/client/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/client/css/bootstrap-theme.css" rel="stylesheet" />
+        <link href="/assets/client/css/jquery-ui.css" rel="stylesheet" />
+        <link href="/assets/client/css/style.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="/assets/client/css/slider.css" rel="stylesheet" type="text/css" media="all" />*@
+
+    @Styles.Render("~/bundles/core")
+
+    <!--nhúng file js-->
+    @*<script src="~/assets/client/js/jquery-1.12.4.min.js"></script>*@
+    <!--<script src="/assets/client/js/jquery-1.12.4.js"></script>--> <!--jquery bản > 1.7.2 để bootstrap tương thích-->
+    <!--<script src="/assets/client/js/jquery-ui.js"></script>
+    <script src="/assets/client/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assets/client/js/move-top.js"></script>
+    <script type="text/javascript" src="/assets/client/js/easing.js"></script>
+    <script type="text/javascript" src="/assets/client/js/startstop-slider.js"></script>-->
+
+    @Scripts.Render("~/bundles/jscore")
+</head>
+
+<body onload="showAlert()">
+    <!-- header + main body -->
+    <div class="wrap">
+        <!--header-->
+        <div class="header">
+            <!--headertop_desc-->
+            <div class="headertop_desc">
+                @{Html.RenderAction("TopMenu", "Home");}
+            </div>
+            <!--header top-->
+            <div class="header_top">
+                <!--Logo-->
+                <div class="logo">
+                    <a href="/" title="Trang chủ" ref="nofollow"><img style="height:86px" src="~/assets/client/images/sonhasa-logo.png" alt="logo" /></a>
+                </div>
+                <!--giỏ hàng cart-->
+                @{Html.RenderAction("HeaderCart", "Home");}
+                <!--Script Dropdown box-->
+                <script type="text/javascript">
+                    function DropDown(el) {
+                        this.dd = el;
+                        this.initEvents();
+                    }
+                    DropDown.prototype = {
+                        initEvents: function () {
+                            var obj = this;
+                            obj.dd.on('click', function (event) {
+                                $(this).toggleClass('active');
+                                event.stopPropagation();
+                            });
+                        }
+                    }
+                    // DropDown
+                    $(function () {
+                        var dd = new DropDown($('#dd'));
+                        $(document).click(function () {
+                            // all dropdowns
+                            $('.wrapper-dropdown-2').removeClass('active');
+                        });
+                    });
+
+                </script>
+                <div class="clear"></div>
+            </div>
+            <!--header bottom-->
+            <div class="header_bottom">
+                @{Html.RenderAction("MainMenu", "Home");}
+                <!--Search box-->
+                <div class="search_box">
+                    <form action="/tim-kiem/page=1" method="get">
+                        <input type="text" id="txtKeyword" name="keyword" placeholder="Gõ từ khóa"><input type="submit" value="">
+                    </form>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <!--header_slide-->
+            @RenderSection("header_slide", required: false)
+            <div class="clear"></div>
+        </div>
+        <!--main body-->
+        <div class="main">
+            @RenderBody()
+        </div>
+    </div>
+    <!--footer-->
+    <div class="footer">
+        @{Html.RenderAction("Footer", "Home");}
+    </div>
+    <!--Script UItoTop-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $().UItoTop({ easingType: 'easeOutQuart' });
+
+        });</script>
+    <!--toTop-->
+    <a href="#" id="toTop"><span id="toTopHover"> </span></a>
+    @*<script src="/assets/client/js/controller/baseController.js"></script>*@
+    @Scripts.Render("~/bundles/js_baseController")
+
+    @RenderSection("jsFooter", required: false)
+    </body>
+</html>
+

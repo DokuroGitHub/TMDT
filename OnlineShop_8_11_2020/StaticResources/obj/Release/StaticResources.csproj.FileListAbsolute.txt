@@ -1,0 +1,11 @@
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\StaticResources\bin\Release\StaticResources.dll
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\StaticResources\bin\Release\StaticResources.pdb
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\StaticResources\bin\Release\en\StaticResources.resources.dll
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\StaticResources\obj\Release\StaticResources.csprojAssemblyReference.cache
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\StaticResources\obj\Release\StaticResources.Resources.resources
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\StaticResources\obj\Release\StaticResources.Resources.en.resources
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\StaticResources\obj\Release\StaticResources.csproj.GenerateResource.cache
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\StaticResources\obj\Release\StaticResources.csproj.CoreCompileInputs.cache
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\StaticResources\obj\Release\en\StaticResources.resources.dll
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\StaticResources\obj\Release\StaticResources.dll
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\StaticResources\obj\Release\StaticResources.pdb

@@ -1,0 +1,89 @@
+﻿@model PagedList.IPagedList<Model.EF.User>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Quản lý người dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Danh sách người dùng
+}
+@section jsFooter{
+    <script src="/assets/admin/js/controller/userController.js"></script>
+}
+
+<!-- DataTables -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    </div>
+
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "User", FormMethod.Get))
+        {
+            <div class="row form-group">
+                <div class="col-sm-12 col-md-6">
+                    <a class="btn btn-primary" href="/Admin/User/Create">Thêm mới</a>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100">
+                        <div class="input-group">
+                            <input type="text" value ="@ViewBag.searchString" name="searchString" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" placeholder="Nhập từ khóa...">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary btn-user" type="submit">Tìm kiếm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>UserName</th>
+                        <th>GroupID</th>
+                        <th>Name</th>
+                        <th>CreatedBy</th>
+                        <th>ModifiedBy</th>
+                        <th>Status</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                @*<tfoot>
+                        <tr>
+                            <th>UserName</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                        </tr>
+                    </tfoot>*@
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@item.UserName</td>
+                        <td>@item.GroupID</td>
+                        <td>@item.Name</td>
+                        <td>@item.CreatedBy</td>
+                        <th>@item.ModifiedBy</th>
+                        <td><a href="#" class="btn-active" data-id="@item.ID">@(item.Status? "Kích hoạt" : "Khóa")</a></td>
+                        <td>
+                            <a href="/Admin/User/Edit/@item.ID">Sửa</a> |
+
+                            @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
+                       {
+                           Confirm = "Bạn có muốn xóa bản ghi này?",
+                           OnComplete = "$('#row_" + @item.ID + "').remove()",
+                           HttpMethod = "Delete",
+                           OnSuccess = "location.reload()"
+                       })
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString= @ViewBag.SearchString }))
+    </div>
+</div>

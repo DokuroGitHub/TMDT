@@ -1,0 +1,114 @@
+﻿@model List<Model.ViewModel.ProductViewModel>
+@{
+    var category = (Model.EF.ProductCategory)ViewBag.ProductCategory;
+    ViewBag.Title = category.Name;
+    ViewBag.Keyword = category.MetaKeywords;
+    ViewBag.Description = category.MetaDescriptions;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content">
+    <!--header category name-->
+    <div class="content_top">
+        <div class="heading">
+            <h3>@category.Name</h3>
+        </div>
+        <div class="see">
+            <p><a href="/san-pham">Xem tất cả sản phẩm</a></p>
+        </div>
+        <!--clear để tránh chồng chất thành phần-->
+        <div class="clear"></div>
+    </div>
+    <!--sản phẩm-->
+
+    <div class="section group">
+        <!--liệt kê-->
+        @foreach (var item in Model)
+        {
+            var link = "/chi-tiet/" + item.MetaTitle + "-" + item.ID;
+            <div class="grid_1_of_4 images_1_of_4">
+                <a href="@link" title="@item.Name Còn: @item.Quantity sản phẩm"><img src="@item.Images" alt="" /></a>
+                <h2>@item.Name</h2>
+                <span>@item.CateName</span>
+                <div class="price-details">
+                    <div class="price-number">
+                        @{
+                            if (item.PromotionPrice != null)
+                            {
+                                if (item.Price != null)
+                                {
+                                    <p><span class="rupees"><s>@item.Price.Value.ToString("N0")<ins>đ</ins></s></span></p>
+                                    <p><span class="rupees">@item.PromotionPrice.Value.ToString("N0")<ins>đ</ins></span></p>
+                                }
+                                else
+                                {
+                                    <p><span class="rupees">Liên hệ</span></p>
+                                    <p><span class="rupees">@item.PromotionPrice.Value.ToString("N0")<ins>đ</ins></span></p>
+                                }
+                            }
+                            else
+                            {
+                                <p><span class="rupees">@(item.Price.HasValue? item.Price.Value.ToString("N0") : "Liên hệ")<ins>đ</ins></span></p>
+                            }
+                        }
+                    </div>
+                    <div class="add-cart">
+                        <h4><a href="/them-gio-hang?productId=@item.ID&quantity=1">Thêm vào giỏ</a></h4>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        }
+        <!--Phân trang-->
+        @if (ViewBag.TotalPage > 0)
+        {
+            //MaxPage = 5, First = 1, Last = TotalPage
+            var pageDisplay = (int)ViewBag.MaxPage;
+            int totalPage = (int)ViewBag.TotalPage;
+            int currentPage = (int)ViewBag.Page;
+
+            //tạo numeric links
+            var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+            var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+            var link = "/san-pham/" + category.MetaTitle + "-" + category.ID;
+            <div class="clear"></div>
+            <nav aria-label="...">
+                <ul class="pagination">
+                    @if (currentPage > ViewBag.First)
+                    {
+                        <li><a href="@link-page=@ViewBag.First" title="Trang đầu[1]"><<</a></li>
+                        <li><a href="@link-page=@ViewBag.Prev" title="Trang trước"><</a></li>
+
+                    }
+                    @for (int i = startPageIndex; i <= endPageIndex; i++)
+                    {
+                        if (i == currentPage)
+                        {
+                            <li class="active"><a href="@link-page=@i" title="Trang @i">@i</a></li>
+
+                        }
+                        else
+                        {
+                            <li><a href="@link-page=@i" title="Trang @i" class="page-link">@i</a></li>
+
+                        }
+                    }
+                    @if (currentPage < totalPage)
+                    {
+                        <li><a href="@link-page=@ViewBag.Next" title="Trang sau">></a></li>
+                        <li><a href="@link-page=@ViewBag.Last" title="Trang cuối[@totalPage]">>></a></li>
+
+                    }
+                </ul>
+            </nav>
+        }
+        else
+        {
+            <span>Không có bản ghi nào</span>
+        }
+
+    </div>
+
+</div>
+

@@ -1,0 +1,139 @@
+﻿@model PagedList.IPagedList<Model.EF.Product>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Quản lý sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Quản lý sản phẩm
+    <title>Sản phẩm</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+        table {
+            table-layout: fixed;
+            border-collapse: collapse
+        }
+
+            table th {
+                width: 1em;
+            }
+
+        td > div.ex1 {
+            max-height: 100px;
+            overflow: auto;
+        }
+    </style>
+}
+@section jsFooter{
+    <script src="~/assets/admin/js/controller/productController.js"></script>
+}
+
+<!-- DataTables -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách sản phẩm</h6>
+    </div>
+
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "Product", FormMethod.Get))
+        {
+            <div class="row form-group">
+                <div class="col-sm-12 col-md-6">
+                    <a class="btn btn-primary" href="/Admin/Product/Create">Thêm mới</a>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100">
+                        <div class="input-group">
+                            <input type="text" value="@ViewBag.searchString" name="searchString" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" placeholder="Nhập từ khóa...">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary btn-user" type="submit">Tìm kiếm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Hình ảnh</th>
+                        <th>Chi tiết</th>
+                        <th>Người tạo</th>
+                        <th>Giá</th>
+                        <th>Giá khiến mãi</th>
+                        <th>Số lượng</th>
+                        <th>Trạng thái</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                @*<tfoot>
+                        <tr>
+                            <th>UserName</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                        </tr>
+                    </tfoot>*@
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td><div class="ex1">@item.Name</div></td>
+                        <td><img src="@item.Image" width="100" height="100" /></td>
+                        <td><div class="ex1">@item.Detail</div></td>
+                        <td>@item.CreatedBy</td>
+                        <td>@item.Price</td>
+                        <td>@item.PromotionPrice</td>
+                        <td>@item.Quantity</td>
+                        <td><a href="#" class="btnStatus" data-id="@item.ID">@(item.Status==true? "Kích hoạt" : "Khóa")</a></td>
+                        <td>
+                            <a href="#" class="btnMoreImages" data-id="@item.ID">Quản lý ảnh</a> |
+                            <a href="/Admin/Product/Edit/@item.ID">Sửa</a> |
+
+                            @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
+                            {
+                                Confirm = "Bạn có muốn xóa bản ghi này?",
+                                HttpMethod = "Delete",
+                                OnSuccess = "location.reload()",
+                            })
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }))
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="MoreImagesModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Quản lý ảnh</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+
+                <div class="imageList" style="margin:5px;">
+
+                </div>
+                <div class="clear"></div>
+                <input type="hidden" id="hidProductID" value="0" />
+
+            </div>
+            <div class="modal-footer">
+                <input type="button" id="btnAddImages" class="btn btn-primary" value="Thêm ảnh" />
+                <button type="button" class="btn btn-outline-success" id="btnSaveImages">Lưu</button>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,78 @@
+﻿@model List<OnlineShop.Models.CartItem>
+@{
+    //Fix cứng
+    ViewBag.Title = "Thanh toán";
+    ViewBag.Keywords = "Thực hiện mua hàng";
+    ViewBag.Description = "Điền thông tin thực hiện mua hàng";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content">
+    <!-- danh sách sản phẩm để thanh toán -->
+        @if (Model.Count > 0)
+        {
+            <div class="section group">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>Mã SP</td>
+                            <td>Tên SP</td>
+                            <td>Ảnh SP</td>
+                            <td>Số lượng</td>
+                            <td>Đơn giá</td>
+                            <td>Thành tiền</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Product.ID</td>
+                                <td>@item.Product.Name</td>
+                                <td><img src="@item.Product.Image" width="100" /></td>
+                                <td><input type="text" class="txtQuantity" data-id="@item.Product.ID" value="@item.Quantity" /></td>
+                                <td>@item.Product.Price.GetValueOrDefault(0).ToString("N0")</td>
+                                <td>@((item.Product.Price.GetValueOrDefault(0) * item.Quantity).ToString("N0"))</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <div class="section group">
+                    <div class="col-md-6">
+                        @using (Html.BeginForm("Payment", "Cart", FormMethod.Post))
+                        {
+                            <div class="form-group">
+                                <label>Tên</label>
+                                <input name="shipName" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Điện thoại</label>
+                                <input name="mobile" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Địa chỉ</label>
+                                <input name="address" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input name="email" class="form-control" />
+                            </div>
+
+                            <button type="submit">Gửi đơn hàng</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <p>Đơn hàng trống</p> 
+        }
+</div>
+
+
+
+

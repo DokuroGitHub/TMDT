@@ -1,0 +1,139 @@
+﻿@model Model.EF.User
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Cập nhật người dùng
+}
+
+@section jsFooter{
+    <script src="/assets/client/js/controller/userController.js"></script>
+}
+<body>
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Thêm mới người dùng</h1>
+        <p class="mb-4">
+            DataTables is a third party plugin that is used to generate the demo table below.
+            For more information about DataTables, please visit the <a target="_blank"
+                                                                       href="https://datatables.net">official DataTables documentation</a>.
+        </p>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Nhập thông tin người dùng</h6>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Edit", "User", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                <fieldset>
+                    <!--đang fix-->
+                    <h4>Edit User</h4>
+                    <hr />
+                    <!--ValidationSummary-->
+                    <div class="form-group">
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        @if (ViewBag.Success != null)
+                        {
+                            <div class="alert alert-success">@ViewBag.Success</div>
+                        }
+                    </div>
+                    <!--UserName-->
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <!--Password-->
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <!--GroupID-->
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.GroupID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(model => model.GroupID, null, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.GroupID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <!--Name-->
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <!--Address-->
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.TextAreaFor(model => model.Address, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <!--Email-->
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <!--Phone-->
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <!--ProvinceID-->
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProvinceID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.DropDownList("ProvinceID", new SelectList(new string[] { }), new { @class = "form-control", @id = "ddlProvince" })
+                            @Html.ValidationMessageFor(model => model.ProvinceID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <!--DistrictID-->
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DistrictID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.DropDownList("DistrictID", new SelectList(new string[] { }), new { @class = "form-control", @id = "ddlDistrict" })
+                            @Html.ValidationMessageFor(model => model.DistrictID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <!--Status-->
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(model => model.Status, htmlAttributes: new { @checked = true })
+                            Trạng thái active
+                        </label>
+                    </div>
+                    <!--Cập nhật-->
+                    <button type="submit" class="btn btn-lg btn-success btn-block">Cập nhật</button>
+                </fieldset>
+                }
+            </div>
+        </div>
+
+    </div>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+
+

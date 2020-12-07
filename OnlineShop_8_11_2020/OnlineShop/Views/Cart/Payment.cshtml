@@ -1,0 +1,222 @@
+﻿@model List<OnlineShop.Models.CartItem>
+@{
+    var CouponList = (List<Model.EF.Coupon>)ViewBag.ListCoupon;
+
+    //Fix cứng
+    ViewBag.Title = "Thanh toán";
+    ViewBag.Keywords = "Thực hiện mua hàng";
+    ViewBag.Description = "Điền thông tin thực hiện mua hàng";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--ajax cho trang thanh toán-->
+@section jsFooter{
+    <script src="/assets/client/js/controller/cartController.js"></script>
+    <script>
+        //cần fix thành POST
+        $('#btnPaymentWithPaypal').off('click').on('click', function () {
+            window.location.href = "/thanh-toan-paypal";
+        });
+    </script>
+}
+
+<div class="content">
+    <!-- nội dung -->
+    <div class="section group">
+        @if (Model.Count > 0)
+        {
+            decimal vndTongCong = 0;
+            decimal dollarTongCong = 0;
+            decimal vndTotalDiscount = 0;
+            decimal dollarTotalDiscount = 0;
+            string stringvndTongCong = "= ";
+            string stringdollarTongCong = "=";
+            string stringvndTotalDiscount = "";
+            string stringdollarTotalDiscount = "";
+            <!--table sản phẩm trong cart-->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Ảnh SP</td>
+                        <td>Mã SP</td>
+                        <td>Tên SP</td>
+                        <td>Số lượng</td>
+                        <td>Đơn giá</td>
+                        <td>Thành tiền</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        string link = "/chi-tiet/"+item.Product.MetaTitle+"-"+item.Product.ID;
+                        <tr style="height:90px">
+                            <td><a href="@link"><img title="@item.Product.Name Còn: @item.Product.Quantity sản phẩm" src="@item.Product.Image" height="90" /></a></td>
+                            <td>@item.Product.ID</td>
+                            <td style="max-width:200px; overflow:auto">@item.Product.Name</td>
+                            <td>@item.Quantity</td>
+                            @if (item.Product.PromotionPrice != null)
+                            {
+                                //ok
+                                decimal vndDonGiaStrike = item.Product.Price.GetValueOrDefault(0); //ok
+                                decimal vndDonGia = item.Product.PromotionPrice.GetValueOrDefault(0); //ok
+                                decimal vndThanhTienStrike = vndDonGiaStrike * item.Quantity; //ok
+                                decimal vndThanhTien = vndDonGia * item.Quantity; //ok
+                                vndTongCong += vndThanhTien; //ok
+                                stringvndTongCong += vndThanhTien.ToString("N0") + "vnđ + ";
+                                decimal dollarDonGiaStrike = decimal.Parse((vndDonGiaStrike / 20000).ToString("N2")); //ok
+                                decimal dollarDonGia = decimal.Parse((vndDonGia / 20000).ToString("N2")); //ok
+                                decimal dollarThanhTienStrike = dollarDonGiaStrike * item.Quantity; //ok
+                                decimal dollarThanhTien = dollarDonGia * item.Quantity; //ok
+                                dollarTongCong += dollarThanhTien; //ok
+                                stringdollarTongCong += " $" + dollarThanhTien.ToString("N2") + " +";
+                                <td>
+                                    <!--đơn giá-->
+                                    <s title="$@dollarDonGiaStrike.ToString("N2")">@vndDonGiaStrike.ToString("N0")<ins>đ</ins></s>
+                                    <p title="$@dollarDonGia.ToString("N2")">@vndDonGia.ToString("N0")<ins>đ</ins></p>
+                                </td>
+                                <td>
+                                    <!--thành tiền-->
+                                    <s title="$@dollarThanhTienStrike.ToString("N2")">@vndThanhTienStrike.ToString("N0")<ins>đ</ins></s>
+                                    <p title="$@dollarThanhTien.ToString("N2")">@vndThanhTien.ToString("N0")<ins>đ</ins></p>
+                                </td>
+                            }
+                            else
+                            {
+                                //ok
+                                decimal vndDonGia = item.Product.Price.GetValueOrDefault(0); //ok
+                                decimal vndThanhTien = vndDonGia * item.Quantity; //ok
+                                vndTongCong += vndThanhTien; //ok
+                                stringvndTongCong += vndThanhTien.ToString("N0") + "vnđ + ";
+                                decimal dollarDonGia = decimal.Parse((vndDonGia / 20000).ToString("N2")); //ok
+                                decimal dollarThanhTien = dollarDonGia * item.Quantity; //ok
+                                dollarTongCong += dollarThanhTien; //ok
+                                stringdollarTongCong += " $" + dollarThanhTien.ToString("N2") + " +";
+                                <td title="$@dollarDonGia.ToString("N2")">@vndDonGia.ToString("N0")<ins>đ</ins></td>
+                                <td title="$@dollarThanhTien.ToString("N2")">@vndThanhTien.ToString("N0")<ins>đ</ins></td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="clear"></div>
+
+            <!--table mã giảm giá-->
+            if (CouponList.Count > 0)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>Tên mã giảm giá</td>
+                            <td>Mã</td>
+                            <td>Công dụng</td>
+                            <td>Giảm</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in CouponList)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Code</td>
+                                <!--Công dụng + Giảm-->
+                                @if (item.ByPercentage == true)
+                                {
+                                    //ok
+                                    decimal vndDiscountAmount = vndTongCong * item.DiscountBy / 100; //ok
+                                    vndTotalDiscount += vndDiscountAmount; //ok
+                                    stringvndTotalDiscount += vndDiscountAmount.ToString("N0") + "vnđ + ";
+                                    decimal dollarDiscountAmount = decimal.Parse((dollarTongCong * item.DiscountBy / 100).ToString("N2")); //ok
+                                    dollarTotalDiscount += dollarDiscountAmount; //ok
+                                    stringdollarTotalDiscount += "$" + dollarDiscountAmount.ToString("N2") + " + ";
+                                    string temp = item.DiscountBy.ToString("N0") + "%"; //ok
+                                    <td>-@temp</td>
+                                    <td title="-$@dollarDiscountAmount.ToString("N2")">-@vndDiscountAmount.ToString("N0")<ins>đ</ins></td>
+                                }
+                                else
+                                {
+                                    //ok
+                                    decimal vndDiscountAmount = item.DiscountBy; //ok
+                                    vndTotalDiscount += vndDiscountAmount; //ok
+                                    stringvndTotalDiscount += vndDiscountAmount.ToString("N0") + "vnđ + ";
+                                    decimal dollarDiscountAmount = decimal.Parse((item.DiscountBy / 20000).ToString("N2")); //ok
+                                    dollarTotalDiscount += dollarDiscountAmount; //ok
+                                    stringdollarTotalDiscount += "$" + dollarDiscountAmount.ToString("N2") + " + ";
+                                    <td title="-$@dollarDiscountAmount.ToString("N2")">-@vndDiscountAmount.ToString("N0")<ins>đ</ins></td>
+                                    <td title="-$@dollarDiscountAmount.ToString("N2")">-@vndDiscountAmount.ToString("N0")<ins>đ</ins></td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+
+            <!--tổng cộng + nút chức năng-->
+            decimal vndGiaMoi = vndTongCong - vndTotalDiscount;
+            decimal dollarGiaMoi = dollarTongCong - dollarTotalDiscount;
+            decimal vndTotal = vndGiaMoi + 10000;
+            decimal dollarTotal = dollarGiaMoi + 5;
+            string stringvndGiaMoi = stringvndTongCong + "0vnđ" + " - (" + stringvndTotalDiscount + "0vnđ)";
+            string stringdollarGiaMoi = stringdollarTongCong + " $0" + " - (" + stringdollarTotalDiscount + "$0)";
+            string stringvndTotal = stringvndGiaMoi + " + 100,000vnđ";
+            string stringdollarTotal = stringdollarGiaMoi + " + $5,00";
+            string stringvndTotal1 = stringvndTongCong + "100,000vnđ";
+            string stringdollarTotal1 = stringdollarTongCong + " $5,00";
+            if (CouponList.Count > 0)
+            {
+                vndGiaMoi = vndGiaMoi > 0 ? vndGiaMoi : 0;
+                dollarGiaMoi = dollarGiaMoi > 0 ? dollarGiaMoi : 0;
+                <h1>Giá gốc: <s title="@stringvndTongCong 0vnđ">@vndTongCong.ToString("N0")vnđ</s> (Hay: <s title="@stringdollarTongCong $0">$@dollarTongCong.ToString("N2")</s>)</h1>
+                <h1>Giá mới: <a title="@stringvndGiaMoi">@vndGiaMoi.ToString("N0")vnđ</a> (Hay: <a title="@stringdollarGiaMoi">$@dollarGiaMoi.ToString("N2")</a>)</h1>
+                <h1>Phí giao hàng: 100,000đ (Hay: $5,00)</h1>
+                <h1 style="color:blue">Tổng cộng: <a title="@stringvndTotal">@vndTotal.ToString("N0") vnđ</a>  (Hay: <a title="@stringdollarTotal">$@dollarTotal.ToString("N2")</a>)</h1>
+            }
+            else
+            {
+                <h1>Giá: @vndTongCong.ToString("N0") vnđ  (Hay: @(dollarTongCong.ToString("N2"))$)</h1>
+                <h1>Phí giao hàng: 100,000đ (Hay: $5,00)</h1>
+                <h1 style="color:blue">Tổng cộng: <a title="@stringvndTotal1">@((vndTongCong + 100000).ToString("N0")) vnđ</a>  (Hay: <a title="@stringdollarTotal1">@((dollarTongCong + 5).ToString("N2"))$</a>)</h1>
+            }
+
+            <br />
+            <!--form đặt order-->
+            <div class="clear"></div>
+            <div class="section group">
+                <div class="col-md-6">
+                    <h1 style="font-size:x-large;">Đặt đơn hàng</h1>
+                    @using (Html.BeginForm("SendOrder", "Cart", FormMethod.Post))
+                    {
+                        <div class="form-group">
+                            <label>Tên</label>
+                            <input name="shipName" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Điện thoại</label>
+                            <input name="mobile" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ</label>
+                            <input name="address" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input name="email" class="form-control" />
+                        </div>
+                        <button type="submit">Gửi đơn đặt hàng</button>
+                        <a class="btn btn-facebook" href="/Cart/PaymentWithPaypal">
+                            <i class="fa fa-paypal"></i>
+                            Thanh toán paypal
+                        </a>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <p>Đơn hàng trống</p>
+        }
+    </div>
+</div>
+
+
+
+

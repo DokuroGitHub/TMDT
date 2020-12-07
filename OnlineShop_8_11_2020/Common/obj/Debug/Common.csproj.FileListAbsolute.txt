@@ -1,0 +1,17 @@
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\Common\bin\Debug\Common.dll
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\Common\bin\Debug\Common.pdb
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\Common\obj\Debug\Common.dll
+D:\1_số_Projects_mẫu\OnlineShop_8_11_2020\Common\obj\Debug\Common.pdb
+D:\TMDT_4_12_2020_11_26_pm\OnlineShop_8_11_2020\Common\bin\Debug\Common.dll
+D:\TMDT_4_12_2020_11_26_pm\OnlineShop_8_11_2020\Common\bin\Debug\Common.pdb
+D:\TMDT_4_12_2020_11_26_pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.csprojAssemblyReference.cache
+D:\TMDT_4_12_2020_11_26_pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+D:\TMDT_4_12_2020_11_26_pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.dll
+D:\TMDT_4_12_2020_11_26_pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.pdb
+C:\Users\dovt5\Desktop\TMĐT_5_12_2020_1_08pm\OnlineShop_8_11_2020\Common\bin\Debug\Common.dll
+C:\Users\dovt5\Desktop\TMĐT_5_12_2020_1_08pm\OnlineShop_8_11_2020\Common\bin\Debug\Common.pdb
+C:\Users\dovt5\Desktop\TMĐT_5_12_2020_1_08pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.csprojAssemblyReference.cache
+C:\Users\dovt5\Desktop\TMĐT_5_12_2020_1_08pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+C:\Users\dovt5\Desktop\TMĐT_5_12_2020_1_08pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.dll
+C:\Users\dovt5\Desktop\TMĐT_5_12_2020_1_08pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.pdb
