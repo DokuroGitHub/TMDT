@@ -17,6 +17,20 @@ namespace OnlineShop
             routes.IgnoreRoute("{*botdetect}",
               new { botdetect = @"(.*)BotDetectCaptcha\.ashx" });
 
+            //Rss//doing
+            routes.MapRoute(
+                name: "PostFeed",
+                url: "Feed/{type}",
+                defaults: new { controller = "Blog", action = "PostFeed", type = "tin-la-chuoi", id = UrlParameter.Optional },
+                namespaces: new[] { "OnlineShop.Controllers" }
+            );
+            //rss//doing
+            routes.MapRoute(
+                name: "ReadRSS",
+                url: "rss",
+                defaults: new { controller = "Blog", action = "ReadRSS", id = UrlParameter.Optional },
+                namespaces: new[] { "OnlineShop.Controllers" }
+            );
             //sản phẩm theo danh mục và theo trang
             routes.MapRoute(
                 name: "Product by Category by page",

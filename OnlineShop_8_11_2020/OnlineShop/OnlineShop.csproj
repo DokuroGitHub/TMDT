@@ -73,6 +73,7 @@
       <HintPath>packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\lib\net46\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -193,6 +194,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ChartController.cs" />
     <Compile Include="Areas\Admin\Controllers\ContentController.cs" />
     <Compile Include="Areas\Admin\Controllers\FooterController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
@@ -209,8 +211,10 @@
     <Compile Include="Common\CommonConstants.cs" />
     <Compile Include="Common\Encryptor.cs" />
     <Compile Include="Common\HasCredentialAttribute.cs" />
+    <Compile Include="Common\RSSActionResult.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
@@ -226,6 +230,7 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ProvinceModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\RSSFeed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\UserLogin.cs" />
   </ItemGroup>
@@ -3380,6 +3385,13 @@
     <Content Include="Areas\Admin\Views\Footer\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Footer\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Footer\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Chart\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Chart\ThongKeThuNhapTrongThang.cshtml" />
+    <Content Include="Areas\Admin\Views\Chart\ThongKeThuNhapLastNdays.cshtml" />
+    <Content Include="Areas\Admin\Views\Chart\ThongKeTongSoSanPham.cshtml" />
+    <Content Include="Areas\Admin\Views\Chart\ThongKeSoSanPhamBanDuoc.cshtml" />
+    <Content Include="Areas\Admin\Views\Chart\ThongKeThuNhapTheoDanhMuc.cshtml" />
+    <Content Include="Areas\Admin\Views\Chart\ThongKeTongGiaTriTheoDanhMuc.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3433,6 +3445,7 @@
     <Content Include="Views\Cart\MyShipList.cshtml" />
     <Content Include="Views\Cart\ProductRunOut.cshtml" />
     <Content Include="Views\Content\ContentWithCategoryID.cshtml" />
+    <Content Include="Views\Blog\ReadRSS.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

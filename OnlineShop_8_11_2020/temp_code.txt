@@ -1,0 +1,40 @@
+////dang fix
+//var product = {
+//    init: function () {
+//        product.registerEvents();
+//    },
+//    //vì ở dưới cùng boby nên ko cần document ready
+//    registerEvents: function () {
+//        //hiện ảnh
+//        product.loadImages();
+//    },
+
+//    //load ảnh
+//    loadImages: function () {
+//        $.ajax({
+//            url: '/Admin/Product/LoadImages',
+//            type: 'GET',
+//            data: {
+//                //productID
+//                id: $('#hidProductID').val()
+//            },
+//            dataType: 'json',
+//            success: function (response) {
+//                var data = response.data;
+//                var html = '';
+//                $.each(data, function (i, item) {
+//                    html += '<div style="float:left"><img src="' + item + '" height="100" /><a class="btn-delImage2"><i class="fa fa-times"></i></a></div>'
+//                });
+//                //hiện ảnh lên class .imageList
+//                $('.imageList').html(html);
+//                //nút x
+//                $('.btn-delImage2').off('click').on('click', function (e) {
+//                    e.preventDefault();
+//                    $(this).parent().remove();
+//                });
+//            },
+//        });
+//    }
+
+//}
+//product.init();

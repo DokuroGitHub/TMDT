@@ -2,6 +2,7 @@
 using Model.Dao;
 using Model.EF;
 using OnlineShop.Common;
+
 using OnlineShop.Models;
 using System;
 using System.Collections.Generic;
@@ -65,7 +66,8 @@ namespace OnlineShop.Controllers
                 {
                     var user = new User();
                     user.UserName = model.UserName;
-                    user.Password = Encryptor.MD5Hash(model.Password);
+                    user.Password = OnlineShop.Common.Encryptor.MD5Hash(model.Password);
+                    user.GroupID = "MEMBER";
                     user.Name = model.Name;
                     user.Address = model.Address;
                     user.Email = model.Email;
@@ -118,8 +120,8 @@ namespace OnlineShop.Controllers
                     var listCredentials = dao.GetListCredential(model.UserName);
 
                     //tạo 2 Session: (UserLogin())USER_SESSION, (List<string>)SESSION_CREDENTIALS
-                    Session.Add(CommonConstants.USER_SESSION, userSession);
-                    Session.Add(CommonConstants.SESSION_CREDENTIALS, listCredentials);
+                    Session.Add(OnlineShop.Common.CommonConstants.USER_SESSION, userSession);
+                    Session.Add(OnlineShop.Common.CommonConstants.SESSION_CREDENTIALS, listCredentials);
 
                     //Session["isAuthorized"] = true;
                     return RedirectToAction("Index", "Home");
@@ -198,25 +200,21 @@ namespace OnlineShop.Controllers
                 user.Status = true;
                 user.Name = firstname + " " + middlename + " " + lastname;
                 user.CreatedDate = DateTime.Now;
-                var id = new UserDao().InsertForFacebook(user);
                 //Ghi vào database
-                if (id > 0)
-                {
-                    var userSession = new UserLogin();
-                    userSession.UserName = user.UserName;
-                    userSession.UserID = user.ID;
+                var id = new UserDao().InsertForFacebook(user);
+                var userSession = new UserLogin();
+                userSession.UserName = user.UserName;
+                userSession.UserID = user.ID;
 
-                    Session.Add(CommonConstants.USER_SESSION, userSession);
-                    //Session[CommonConstants.isAuthorized] = true;
-                }
+                Session.Add(OnlineShop.Common.CommonConstants.USER_SESSION, userSession);
             }
             return Redirect("/");
         }
         //done
         public ActionResult Logout(LoginModel model)
         {
-            Session[CommonConstants.USER_SESSION] = null;
-            Session[CommonConstants.SESSION_CREDENTIALS] = null;
+            Session[OnlineShop.Common.CommonConstants.USER_SESSION] = null;
+            Session[OnlineShop.Common.CommonConstants.SESSION_CREDENTIALS] = null;
             //Session[CommonConstants.isAuthorized] = false;
             //return RedirectToAction("Index", "Home");
             return Redirect("/");

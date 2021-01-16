@@ -1,5 +1,7 @@
+//thống kê
+
+
 //fix thành web bán sách  // tạm thời done //chuyển IEnumerable sang List(?ko chắc)
-//test git 8_12_2020_1_36am
 //load province vs distric ko dc nhung change save dc
 
                 new { controller = "Base|Category|Content|Footer|Home|Login|Product|User" },

@@ -65,6 +65,7 @@
     <Compile Include="Dao\OrderDao.cs" />
     <Compile Include="Dao\CouponUserDao.cs" />
     <Compile Include="Dao\OrderCouponDao.cs" />
+    <Compile Include="Dao\ThongKeDao.cs" />
     <Compile Include="Dao\OrderDetailDao.cs" />
     <Compile Include="Dao\ProductCateogryDao.cs" />
     <Compile Include="Dao\ProductDao.cs" />
@@ -99,7 +100,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CouponItem.cs" />
     <Compile Include="ViewModel\ContentViewModel.cs" />
+    <Compile Include="ViewModel\ProductCategoryViewModel.cs" />
     <Compile Include="ViewModel\ShipItem.cs" />
+    <Compile Include="ViewModel\OrderViewModel.cs" />
     <Compile Include="ViewModel\ShipViewModel.cs" />
     <Compile Include="ViewModel\ProductViewModel.cs" />
   </ItemGroup>

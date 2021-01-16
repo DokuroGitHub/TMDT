@@ -34,5 +34,9 @@ namespace Model.Dao
             return db.Categories.Find(id);
         }
 
+        public Category TakeByAlias(string alias)
+        {
+            return db.Categories.Where(x=>x.MetaTitle.Contains(alias)).FirstOrDefault();
+        }
     }
 }

@@ -176,6 +176,40 @@ namespace Model.Dao
                          });
             return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
         }
+        //doing
+        public IEnumerable<Content> ListAllByCategoryAlias(string alias)
+        {
+            var model = (from a in db.Contents
+                         join b in db.Categories
+                         on a.CategoryID equals b.ID
+                         where b.MetaTitle.Contains(alias)
+                         select new
+                         {
+                             ID = a.ID,
+                             Name = a.Name,
+                             MetaTitle = a.MetaTitle,
+                             CategoryID = a.CategoryID,
+                             Image = a.Image,
+                             Description = a.Description,
+                             CreatedDate = a.CreatedDate,
+                             CreatedBy = a.CreatedBy,
+                             Tags = a.Tags
+
+                         }).AsEnumerable().Select(x => new Content()
+                         {
+                             ID = x.ID,
+                             Name = x.Name,
+                             MetaTitle = x.MetaTitle,
+                             CategoryID = x.CategoryID,
+                             Image = x.Image,
+                             Description = x.Description,
+                             CreatedDate = x.CreatedDate,
+                             CreatedBy = x.CreatedBy,
+                             Tags = x.Tags
+                         });
+            return model.OrderByDescending(x => x.CreatedDate);
+        }
+
 
         public long Insert(Content entity)
         {

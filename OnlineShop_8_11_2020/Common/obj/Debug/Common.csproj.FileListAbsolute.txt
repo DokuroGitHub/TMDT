@@ -15,3 +15,8 @@ C:\Users\dovt5\Desktop\TMĐT_5_12_2020_1_08pm\OnlineShop_8_11_2020\Common\obj\De
 C:\Users\dovt5\Desktop\TMĐT_5_12_2020_1_08pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
 C:\Users\dovt5\Desktop\TMĐT_5_12_2020_1_08pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.dll
 C:\Users\dovt5\Desktop\TMĐT_5_12_2020_1_08pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.pdb
+D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\Common\bin\Debug\Common.dll
+D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\Common\bin\Debug\Common.pdb
+D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.dll
+D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.pdb

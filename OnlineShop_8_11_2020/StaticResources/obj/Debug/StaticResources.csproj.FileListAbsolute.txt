@@ -19,3 +19,14 @@ D:\TMDT_4_12_2020_11_26_pm\OnlineShop_8_11_2020\StaticResources\obj\Debug\Static
 D:\TMDT_4_12_2020_11_26_pm\OnlineShop_8_11_2020\StaticResources\obj\Debug\en\StaticResources.resources.dll
 D:\TMDT_4_12_2020_11_26_pm\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.dll
 D:\TMDT_4_12_2020_11_26_pm\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.pdb
+D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\StaticResources\bin\Debug\StaticResources.dll
+D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\StaticResources\bin\Debug\StaticResources.pdb
+D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\StaticResources\bin\Debug\en\StaticResources.resources.dll
+D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.csprojAssemblyReference.cache
+D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.Resources.resources
+D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.Resources.en.resources
+D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.csproj.GenerateResource.cache
+D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.csproj.CoreCompileInputs.cache
+D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\StaticResources\obj\Debug\en\StaticResources.resources.dll
+D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.dll
+D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.pdb

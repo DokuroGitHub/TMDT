@@ -18,7 +18,7 @@ namespace OnlineShop.Areas.Admin
                 "Admin_default",
                 "Admin/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional },
-                new { controller = "Base|Category|Content|Footer|Home|Login|Product|User" },
+                new { controller = "Base|Category|Chart|Content|Footer|Home|Login|Product|User" },
                 new[] { "OnlineShop.Areas.Admin.Controllers" }
             );
         }
