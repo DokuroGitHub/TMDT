@@ -84,11 +84,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <div class="clear"></div>
             </div>
             <!--header bottom-->
+            
             <div class="header_bottom">
                 @{Html.RenderAction("MainMenu", "Home");}
                 <!--Search box-->
                 <div class="search_box">
                     <form action="/tim-kiem/page=1" method="get">
+                        @Html.AntiForgeryToken()
                         <input type="text" id="txtKeyword" name="keyword" placeholder="Gõ từ khóa"><input type="submit" value="">
                     </form>
                 </div>

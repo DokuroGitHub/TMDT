@@ -88,6 +88,7 @@ namespace OnlineShop.Controllers
             return View(model);
         }
 
+        [ValidateAntiForgeryToken]
         public ActionResult Search(string keyword, int pageIndex, int pageSize = 2)
         {
             int totalRecord = 0;
