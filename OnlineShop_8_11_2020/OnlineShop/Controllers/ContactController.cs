@@ -11,12 +11,14 @@ namespace OnlineShop.Controllers
     public class ContactController : BaseController
     {
         // GET: Contact
+        
         public ActionResult Index()
         {
             var model = new ContactDao().GetActiveContact();
             return View(model);
         }
 
+        
         public JsonResult Send(string name, string mobile, string address, string email, string content)
         {
             var feedback = new Feedback();

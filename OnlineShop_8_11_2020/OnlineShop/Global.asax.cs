@@ -12,6 +12,7 @@ namespace OnlineShop
     {
         protected void Application_Start()
         {
+            System.Web.Helpers.AntiForgeryConfig.SuppressXFrameOptionsHeader = true;
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

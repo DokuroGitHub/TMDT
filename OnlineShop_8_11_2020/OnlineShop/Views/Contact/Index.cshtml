@@ -69,6 +69,7 @@ else
                     <br />
                     <h2>Gửi thông tin</h2>
                     <form>
+                        @Html.AntiForgeryToken()
                         <div class="form-group">
                             <label>Họ tên</label>
                             <input type="text" id="txtName" class="form-control" />
