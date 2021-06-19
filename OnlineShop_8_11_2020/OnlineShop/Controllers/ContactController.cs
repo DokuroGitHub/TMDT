@@ -11,6 +11,7 @@ namespace OnlineShop.Controllers
     public class ContactController : BaseController
     {
         // GET: Contact
+
         
         public ActionResult Index()
         {
@@ -18,7 +19,8 @@ namespace OnlineShop.Controllers
             return View(model);
         }
 
-        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult Send(string name, string mobile, string address, string email, string content)
         {
             var feedback = new Feedback();
