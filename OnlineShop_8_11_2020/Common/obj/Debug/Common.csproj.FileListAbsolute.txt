@@ -20,3 +20,9 @@ D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\Common\bin\Debug
 D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
 D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.dll
 D:\1_số_Projects_mẫu\6_12_2020_3_16_pm\OnlineShop_8_11_2020\Common\obj\Debug\Common.pdb
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\Common\bin\Debug\Common.dll
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\Common\bin\Debug\Common.pdb
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\Common\obj\Debug\Common.csprojAssemblyReference.cache
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\Common\obj\Debug\Common.dll
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\Common\obj\Debug\Common.pdb

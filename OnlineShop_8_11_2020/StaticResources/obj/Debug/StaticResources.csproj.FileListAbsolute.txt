@@ -41,3 +41,14 @@ C:\Users\thang\Desktop\Git\TMDT\OnlineShop_8_11_2020\StaticResources\obj\Debug\S
 C:\Users\thang\Desktop\Git\TMDT\OnlineShop_8_11_2020\StaticResources\obj\Debug\en\StaticResources.resources.dll
 C:\Users\thang\Desktop\Git\TMDT\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.dll
 C:\Users\thang\Desktop\Git\TMDT\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.pdb
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\StaticResources\bin\Debug\StaticResources.dll
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\StaticResources\bin\Debug\StaticResources.pdb
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\StaticResources\bin\Debug\en\StaticResources.resources.dll
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.csprojAssemblyReference.cache
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.Resources.resources
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.Resources.en.resources
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.csproj.GenerateResource.cache
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.csproj.CoreCompileInputs.cache
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\StaticResources\obj\Debug\en\StaticResources.resources.dll
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.dll
+D:\Hoctap\Hocky2_2021\Baomatweb\TMDT\OnlineShop_8_11_2020\StaticResources\obj\Debug\StaticResources.pdb
